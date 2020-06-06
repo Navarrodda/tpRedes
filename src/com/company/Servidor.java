@@ -14,11 +14,8 @@ public class Servidor {
     public static void main(String[] args) {
 
         ServerSocket servidor = null;
-        Socket sc = null;
-        DataInputStream in;
-        DataOutputStream out;
 
-        Scanner sn = new Scanner (System.in);
+        Integer numCliente;
 
         //puerto de nuestro servidor
         final int PUERTO = 3000;
@@ -29,47 +26,24 @@ public class Servidor {
 
             System.out.println("Servidor iniciado");
 
+            numCliente = 1;
+
             //Siempre estara escuchando peticiones
             while (true) {
+                Socket sc = null;
 
                 //Espero a que un cliente se conecte
                 sc = servidor.accept();
 
-                System.out.println("Cliente conectado");
+                Chat chat = new Chat(sc , numCliente);
 
-                in = new DataInputStream(sc.getInputStream());
-                out = new DataOutputStream(sc.getOutputStream());
+                chat.iniciar();
 
-                //Le envio un mensaje
-                out.writeUTF("Comience a escribir:");
-
-                String mensaje = " ";
-
-                while(mensaje != "x" || mensaje != "X" ){
-
-                    //Leo el mensaje que me envia
-                    mensaje = in.readLine();
-
-                    out.writeUTF( "\fCliente:" +mensaje +"\f");
-                    System.out.println("\nCliente:" +mensaje);
-
-                    String enviar = sn.nextLine();
-
-                    //Le envio un mensaje
-                    out.writeUTF("\f Servidor:" + enviar +"\f");
-                    System.out.println("\nServidor:" + enviar);
-                }
-
-                //Cierro el socket
-                sc.close();
-                System.out.println("Cliente desconectado");
+                numCliente ++;
             }
-
 
         } catch (IOException ex) {
             Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
-
 }
