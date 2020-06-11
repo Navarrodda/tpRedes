@@ -33,12 +33,13 @@ public class Servidor {
 
                 //Espero a que un cliente se conecte
                 sc = servidor.accept();
+                if(numCliente < 6){
+                    Cliente cliente = new Cliente(sc, numCliente);
 
-                Cliente cliente = new Cliente(sc , numCliente);
+                    cliente.start();
+                    numCliente++;
+                }
 
-                cliente.start();
-
-                numCliente ++;
             }
 
         } catch (IOException ex) {
