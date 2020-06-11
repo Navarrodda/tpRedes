@@ -14,8 +14,7 @@ public class Cliente extends Thread{
     DataOutputStream out;
     Integer numero;
     Scanner sn = new Scanner(System.in);
-   // InetAddress addr = InetAddress.getByName("127.0.0.1");
-   // ServerSocket sock = new ServerSocket(3000, 50,addr);
+
 
     public Cliente(Socket sc, Integer numero) throws IOException {
         this.sc = sc;
@@ -24,7 +23,7 @@ public class Cliente extends Thread{
 
     public void run(){
         System.out.println("\t");
-        System.out.println("Cliente "+ numero + ":");
+        System.out.println("Cliente "+ numero + ": Conectado ");
         System.out.println('\t' + "LocalPort " + sc.getLocalPort());
         System.out.println('\t' + "Port " + sc.getPort());
         System.out.println('\t' + "LocalSocketAddress " + sc.getLocalSocketAddress());
@@ -65,13 +64,13 @@ public class Cliente extends Thread{
                 }
             }
         }  catch (IOException ex) {
-            Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         //Cierro el socket
         try {
             sc.close();
-            System.out.println("Cliente "+ numero +" desconectado");
+            System.out.println("Cliente "+ numero +": Desconectado");
         } catch (IOException e) {
             e.printStackTrace();
         }
