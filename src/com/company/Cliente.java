@@ -23,7 +23,11 @@ public class Cliente extends Thread{
     }
 
     public void run(){
-        System.out.println("Cliente "+ numero +" conectado: " + sc);
+        System.out.println("\t");
+        System.out.println("Cliente "+ numero + ":");
+        System.out.println('\t' + "LocalPort " + sc.getLocalPort());
+        System.out.println('\t' + "Port " + sc.getPort());
+        System.out.println('\t' + "LocalSocketAddress " + sc.getLocalSocketAddress());
 
         try {
 
@@ -36,13 +40,15 @@ public class Cliente extends Thread{
             while (mensaje.equals("x") == false && mensaje.equals("X") == false) {
 
                 //Le aviso al cliente que escriba
-                out.writeUTF("Escriba una mensaje:");
+                out.writeUTF("\fConectado como cliente: " + numero);
+                out.writeUTF("\nEscriba una mensaje:");
+
 
                 //Leo el mensaje que me envia
                 mensaje = in.readLine();
 
-                out.writeUTF("\fCliente " + numero + ":" + mensaje + "\f");
-                System.out.println("\nCliente " + numero + ":" + mensaje);
+                out.writeUTF( "\f Escribiste: " + mensaje + "\f");
+                System.out.println("\nCliente " + numero +": A enviado un mensaje: " + mensaje);
 
                 if (mensaje.equals("x") == false && mensaje.equals("X") == false) {
 
