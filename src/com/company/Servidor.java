@@ -1,11 +1,8 @@
 package com.company;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,6 +12,7 @@ public class Servidor {
 
         ServerSocket servidor = null;
 
+
         Integer numCliente;
 
         //puerto de nuestro servidor
@@ -23,6 +21,7 @@ public class Servidor {
         try {
             //Creamos el socket del servidor
             servidor = new ServerSocket(PUERTO);
+
 
             System.out.println("Servidor iniciado");
 
@@ -35,9 +34,9 @@ public class Servidor {
                 //Espero a que un cliente se conecte
                 sc = servidor.accept();
 
-                Chat chat = new Chat(sc , numCliente);
+                Cliente cliente = new Cliente(sc , numCliente);
 
-                chat.iniciar();
+                cliente.start();
 
                 numCliente ++;
             }
