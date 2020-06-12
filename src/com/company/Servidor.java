@@ -12,6 +12,7 @@ public class Servidor {
 
         ServerSocket servidor = null;
 
+        Chat rs = new Chat();
 
         Integer numCliente;
 
@@ -34,7 +35,7 @@ public class Servidor {
                 //Espero a que un cliente se conecte
                 sc = servidor.accept();
                 if(numCliente < 6){
-                    Cliente cliente = new Cliente(sc, numCliente);
+                    Client cliente = new Client(sc, numCliente, rs);
 
                     cliente.start();
                     numCliente++;
