@@ -26,11 +26,10 @@ Pertenese a la capa 4 la de "Transporte", A la 3 de "Red" y a la capa 2 "Víncul
 ~ Se usa el protocolo TCP del protocolo TCP/IP, para gestionar la conexipara.
 ~ El modelo Cliente-Servidor define la estructura de las aplicaciones comunicantes y su sincronización
 
-
 6. ¿Cuales son las causas comunes por la que la conexión entre cliente/servidor falle? 
-
-
-
+-Que el servidor termine la ejecución del proceso principal antes de que los clientes se desconecten.
+-Si la dirección IP de la máquina servidor está configurada a una dinámica, esto puede causar problemas de conexión entre el servidor y el cliente, se recomienda usar una IP fija.
+-Que el Cliente interrumpa su coenxión antes de enviar un mensaje, y el mismo no llegue al Servidor, solo la excepcion.
 
 7. Diferencias entre sockets UDP y TCP 
 La principal diferencia entre ambos es:
