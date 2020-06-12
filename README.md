@@ -2,6 +2,10 @@
 
 Trabajo practico de Redes
 
+Integrantes:
+» Latorre, Ariana Guillermina.
+» Navarro David.
+
 Preguntas: 
 1. ¿Que es un puerto? 
 Un puerto es una interfaz a través de la cual se pueden enviar y recibir los diferentes tipos de datos.
