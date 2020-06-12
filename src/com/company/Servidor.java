@@ -1,8 +1,7 @@
 package com.company;
 
 import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -10,23 +9,46 @@ public class Servidor {
 
     public static void main(String[] args) {
 
+        InetAddress address;
+
         ServerSocket servidor = null;
 
-        Chat rs = new Chat();
+        //Acceso al recurso compartido
+        Chat chat = new Chat();
 
-        Integer numCliente;
+        //Manejo de Clientes
+        Integer numClient = 1;
+        Integer clientsCant = 6;
 
-        //puerto de nuestro servidor
-        final int PUERTO = 3000;
+        int port = 3000;
 
+        //MANEJO DE EXCEPCIONES DE INGRESO DE IP Y PUERTO VÁLIDOS
+
+
+        //INICIO EL SERVIDOR
         try {
-            //Creamos el socket del servidor
-            servidor = new ServerSocket(PUERTO);
+            //Comprobamos si la IP es válida, se puede reemplazar el InetAddress.getLocalHost().gerHostAddress() por la direccion.
+            //Si ingresamos un direccion erronea en ese campo se dispara la excepcion Bind.
+            address = InetAddress.getByName(InetAddress.getLocalHost().getHostAddress());
 
+            //Creamos el socket del servidor
+            servidor = new ServerSocket(port, 1, address);
 
             System.out.println("Servidor iniciado");
 
-            numCliente = 1;
+        }catch (BindException be) {
+            System.err.println("No puedo encontrar la dirección IP : " + be);
+
+        }catch (UnknownHostException uhe) {
+            System.err.println("No puedo encontrar la dirección IP : " + uhe);
+
+        } catch (IOException ex) {
+            Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+        //ESPERO A LOS CLIENTES E INICIO LA CONEXIÓN
+        try{
 
             //Siempre estara escuchando peticiones
             while (true) {
@@ -34,17 +56,21 @@ public class Servidor {
 
                 //Espero a que un cliente se conecte
                 sc = servidor.accept();
-                if(numCliente < 6){
-                    Client cliente = new Client(sc, numCliente, rs);
 
-                    cliente.start();
-                    numCliente++;
+                if (numClient < clientsCant) {
+
+                    Client client = new Client(sc, numClient, chat);
+
+                    //INICIO LA CONEXIÓN CON EL CLIENTE EN UN HILO Y CONTINUO A LA ESPERA DE NUEVOS CLIENTES.
+                    client.start();
+
+                    numClient++;
+
                 }
-
             }
-
-        } catch (IOException ex) {
+        }catch (IOException ex) {
             Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+
         }
     }
 }
