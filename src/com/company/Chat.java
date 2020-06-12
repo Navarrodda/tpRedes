@@ -3,13 +3,15 @@ package com.company;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Chat {//EL CLIENTE ENVIA E IMPRIME POR PANTALLA
+public class Chat {//EL RECURSO COMPARTIDO ES LA POSIBILIDAD DE ESCRIBIR Y LEER POR PARTE DE LA CONSOLA DEL SERVIDOR
+
     private boolean available = false;
     Scanner sn = new Scanner(System.in);
 
+    //ACCESO A ESCRIBIR EN LA CONSOLA DEL SERVIDOR
     public synchronized void readClient (String mesaje, Integer number, Socket sc){//LO QUE MANDA EL CLIENTE
-        while (available) {
 
+        while (available) {
             try{
                 wait();
             }catch (InterruptedException e) {
@@ -25,26 +27,30 @@ public class Chat {//EL CLIENTE ENVIA E IMPRIME POR PANTALLA
         }
         else{
             if(sc.isClosed()){
+
                 System.out.println("Cliente "+ number +" a finalizado la transmisión");
                 available = true;
+
             }
             else{
+
                 System.out.println("\t");
                 System.out.println("Cliente "+ number + ":");
                 System.out.println('\t' + "LocalPort " + sc.getLocalPort());
                 System.out.println('\t' + "Port " + sc.getPort());
                 System.out.println('\t' + "LocalSocketAddress " + sc.getLocalSocketAddress());
                 available = false;
+
             }
         }
 
         notifyAll();
     }
 
+    //ACCESO A LEER DESDE LA CONSOLA DEL SERVIDOR
     public synchronized String readServer(Integer numero ){
 
         while (!available) {
-
             try{
                 wait();
             }catch (InterruptedException e) {

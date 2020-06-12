@@ -7,50 +7,49 @@ import java.net.Socket;
 
 public class Client extends Thread{
 
-    Socket sc;
+    Socket socket;
     DataInputStream in;
     DataOutputStream out;
     Integer number;
-    Chat rs;
+    Chat chat;
 
-    // InetAddress addr = InetAddress.getByName("127.0.0.1");
-    // ServerSocket sock = new ServerSocket(3000, 50,addr);
-
-    public Client(Socket sc, Integer number,  Chat rs) throws IOException {
-        this.sc = sc;
+    public Client(Socket sc, Integer number,  Chat chat) throws IOException {
+        this.socket = sc;
         this.number = number;
-        this.rs = rs;
+        this.chat = chat;
     }
 
     public void run(){
 
-        rs.readClient(null,number,sc);
+        //PARA AVISARLE AL SERVIDOR QUE HAY UNA NUEVO CONEXIÓN DEBO ACCEDER AL RECURSO COMPARTIDO
+        chat.readClient(null,number,socket);
 
         try {
 
-            in = new DataInputStream(sc.getInputStream());
-            out = new DataOutputStream(sc.getOutputStream());
+            in = new DataInputStream(socket.getInputStream());
+            out = new DataOutputStream(socket.getOutputStream());
 
             String mesaje= " ";
             String send= " ";
 
-            //Le aviso al cliente que escriba
-            out.writeUTF("\fConectado como cliente: " + number);
+            //LE AVISO AL CLIENTE QUE ESTA CONECTADO CON EL SERVIDOR
+            out.writeUTF("\fServidor en contrado \tConectado como cliente: " + number);
 
-            while (send.equals("x") == false && send.equals("X") == false) {
+            //LA CONEXIÓN SE TERMINARA CUANDO EL CLIENTE ENVÍE "X"
+            while (send.equals("x") == false && send.equals("X") == false && mesaje.equals("x") == false && mesaje.equals("X") == false ) {
 
                 out.writeUTF("\nEscriba una mensaje:");
 
                 send = in.readLine();
 
-                rs.readClient(send, number, null);
+                chat.readClient(send, number, null);
 
                 out.writeUTF( "\f Escribiste: " + send + "\f");
 
 
                 if (send.equals("x") == false && send.equals("X") == false) {
 
-                    mesaje = rs.readServer(number);
+                    mesaje = chat.readServer(number);
 
                     out.writeUTF("\f Servidor a enviado un mensaje:" + mesaje + "\f");
 
@@ -59,15 +58,21 @@ public class Client extends Thread{
                 }
             }
         }  catch (IOException ex) {
-
+            System.out.println("Se ha perdido la conexión con el Cliente "+ number );
         }
 
-        //Cierro el socket
+        //CIERRO EL SOCKET
         try {
-            sc.close();
-            rs.setAvailable(false);
-            rs.readClient(null,number,sc);
-            rs.setAvailable(false);
+            socket.close();
+
+            chat.setAvailable(false);//EL CAMBIO DE VALOR A FALSE ES POR UN BUG QUE SUCEDE CUANDO UN CLIENTE SALE DEL
+            // CHAT Y DEJA LA VARIABLE EN TRUE, POR LO QUE EL THREAD QUE QUIERA FINALIZAR LA CONEXION NO PODRA AVISARLE
+            // AL SERVIDOR Y QUEDARA BLOQUEADO.
+
+            chat.readClient(null, number, socket);
+
+            chat.setAvailable(false);
+
         } catch (IOException e) {
             System.out.println("Se ha perdido la conexión con el Cliente "+ number );
         }
