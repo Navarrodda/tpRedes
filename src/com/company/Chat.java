@@ -9,7 +9,7 @@ public class Chat {//EL RECURSO COMPARTIDO ES LA POSIBILIDAD DE ESCRIBIR Y LEER 
     Scanner sn = new Scanner(System.in);
 
     //ACCESO A ESCRIBIR EN LA CONSOLA DEL SERVIDOR
-    public synchronized void readClient (String mesaje, Integer number, Socket sc){//LO QUE MANDA EL CLIENTE
+    public synchronized void readClient (String message, Integer number, Socket sc){//LO QUE MANDA EL CLIENTE
 
         while (available) {
             try{
@@ -19,14 +19,14 @@ public class Chat {//EL RECURSO COMPARTIDO ES LA POSIBILIDAD DE ESCRIBIR Y LEER 
             }
         }
 
-        if(sc == null) {
+        if(sc == null || message != null ) {
 
-            System.out.println("El Cliente " + number + " a enviado: " + mesaje);
+            System.out.println("El Cliente " + number + " a enviado: " + message);
             available = true;
 
         }
         else{
-            if(sc.isClosed()){
+            if(sc.isClosed() || message == null){
 
                 System.out.println("Cliente "+ number +" a finalizado la transmisión");
                 available = true;
