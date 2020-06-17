@@ -51,14 +51,14 @@ public class Client extends Thread{
 
                     mesaje = chat.readServer(number);
 
-                    out.writeUTF("\f Servidor a enviado un mensaje:" + mesaje + "\f");
+                    out.writeUTF("\f█ Servidor a enviado un mensaje:" + mesaje + " █\f");
 
                 } else {
                     out.writeUTF("\f Hasta luego...");
                 }
             }
         }  catch (IOException ex) {
-            System.out.println("Se ha perdido la conexión con el Cliente "+ number );
+            System.out.println("\n╔Se ha perdido la conexión con el Cliente "+ number + " o el");
         }
 
         //CIERRO EL SOCKET
@@ -74,7 +74,7 @@ public class Client extends Thread{
             chat.setAvailable(false);
 
         } catch (IOException e) {
-            System.out.println("Se ha perdido la conexión con el Cliente "+ number );
+            System.out.println("Se ha perdido la conexión fallo con el Cliente "+ number );
         }
 
     }
