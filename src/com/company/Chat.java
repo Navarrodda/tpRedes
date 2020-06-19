@@ -21,14 +21,14 @@ public class Chat {//EL RECURSO COMPARTIDO ES LA POSIBILIDAD DE ESCRIBIR Y LEER 
 
         if(message != null ) {
 
-            System.out.println("▀ El Cliente " + number + " a enviado: " + message + " ▀");
+            System.out.println("--El Cliente " + number + " a enviado: " + message );
             available = true;
 
         }
         else{
             if(sc.isClosed()){
 
-                System.out.println("╚ Cliente "+ number +" a finalizado la transmisión .......");
+                System.out.println("--Cliente "+ number +" a finalizado la transmisión .......");
                 available = true;
 
             }
@@ -60,11 +60,11 @@ public class Chat {//EL RECURSO COMPARTIDO ES LA POSIBILIDAD DE ESCRIBIR Y LEER 
         }
 
         //Le aviso al Servidor que escriba
-        System.out.println("⌂ Escriba un mensaje para el Cliente "+ numero  +" :" +" ⌂");
+        System.out.println("Escriba un mensaje para el Cliente "+ numero  +" :");
 
         String mesaje = sn.nextLine();
 
-        System.out.println("\n▲ Escribiste un mensaje al Cliente "+ numero  +" :" + mesaje + " ▲");
+        System.out.println("\n--Escribiste un mensaje al Cliente "+ numero  +" :" + mesaje );
 
         available = false;
         notifyAll();
