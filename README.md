@@ -6,6 +6,18 @@ Integrantes:
 » Latorre, Ariana Guillermina.
 » Navarro David.
 
+Funcionamiento:
+1° Iniciar el Servidor
+-Conocer la ruta donde este descargado el Tp_Redes.jar que se encuentra en el siguiente link https://drive.google.com/drive/folders/1gSS63hJOTairPOynFQDoiJ7LxonTWwo4?usp=sharing , o el la ruta del proyecto ...\tpRedes\out\artifacts\Tp_Redes_jar
+-Abrir consola cmd y ejecutar el comando: >cd (ruta del .jar).
+-Ejecutar el comando: >java -jar Tp_Redes.jar
+-Copiar la IP que aparace en la ejecución del .jar.
+
+2° Iniciar Cliente/s
+-Tener habilitado el telnet en cdm u otra consola, y abrirlo.
+-Ejecutar el comando: >telnet (Ip copiada desde la consola del Servidor) 3000
+-Iniciar comunicación.
+
 Preguntas: 
 1. ¿Que es un puerto? 
 Un puerto es una interfaz a través de la cual se pueden enviar y recibir los diferentes tipos de datos.
