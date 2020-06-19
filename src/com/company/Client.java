@@ -51,7 +51,7 @@ public class Client extends Thread{
 
                     mesaje = chat.readServer(number);
 
-                    out.writeUTF("\f█ Servidor a enviado un mensaje:" + mesaje + " █\f");
+                    out.writeUTF("\f---Servidor a enviado un mensaje:" + mesaje + " \f");
 
                 } else {
                     out.writeUTF("\f Hasta luego...");
