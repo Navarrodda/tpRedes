@@ -8,7 +8,7 @@ Integrantes:
 
 Funcionamiento:
 1° Iniciar el Servidor
--Conocer la ruta donde este descargado el Tp_Redes.jar que se encuentra en el siguiente link https://drive.google.com/drive/folders/1gSS63hJOTairPOynFQDoiJ7LxonTWwo4?usp=sharing , o el la ruta del proyecto ...\tpRedes\out\artifacts\Tp_Redes_jar
+-Conocer la ruta donde este descargado el Tp_Redes.jar que se encuentra en el siguiente link https://drive.google.com/drive/folders/1WnIto-RVwCA3W4-9kzYthMBH3L-ITpxG?usp=sharing , o el la ruta del proyecto ...\tpRedes\out\artifacts\Tp_Redes_jar
 -Abrir consola cmd y ejecutar el comando: >cd (ruta del .jar).
 -Ejecutar el comando: >java -jar Tp_Redes.jar
 -Copiar la IP que aparace en la ejecución del .jar.
