@@ -2,7 +2,6 @@ package com.company;
 
 import java.io.IOException;
 import java.net.*;
-import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,26 +29,7 @@ public class Servidor {
         try {
             //Comprobamos si la IP es válida, se puede reemplazar el InetAddress.getLocalHost().gerHostAddress() por la direccion.
             //Si ingresamos un direccion erronea en ese campo se dispara la excepcion Bind.
-
-
-            Enumeration e = NetworkInterface.getNetworkInterfaces();
-            int a =0;
-            String myIp = null;
-            while(e.hasMoreElements())
-            {
-                NetworkInterface n = (NetworkInterface) e.nextElement();
-                Enumeration ee = n.getInetAddresses();
-                while (ee.hasMoreElements())
-                {
-                    InetAddress i = (InetAddress) ee.nextElement();
-                    if(a == 4)
-                    {
-                        myIp = i.getHostAddress();
-                    }
-                    a++;
-                }
-            }
-            address = InetAddress.getByName(myIp);
+            address = InetAddress.getByName(InetAddress.getLocalHost().getHostAddress());
 
             //Creamos el socket del servidor
             servidor = new ServerSocket(port, 1, address);
