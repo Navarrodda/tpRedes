@@ -54,7 +54,7 @@ public class Servidor {
             //Creamos el socket del servidor
             servidor = new ServerSocket(port, 1, address);
 
-            System.out.println("Servidor iniciado en el host : " + address);
+            System.out.println("Servidor iniciado en el host : " + InetAddress.getLocalHost().getHostAddress());
 
         }catch (BindException be) {
             System.err.println("No puedo encontrar la dirección IP : " + be);

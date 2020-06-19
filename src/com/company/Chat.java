@@ -9,7 +9,7 @@ public class Chat {//EL RECURSO COMPARTIDO ES LA POSIBILIDAD DE ESCRIBIR Y LEER 
     Scanner sn = new Scanner(System.in);
 
     //ACCESO A ESCRIBIR EN LA CONSOLA DEL SERVIDOR
-    public synchronized void readClient (String mesaje, Integer number, Socket sc){//LO QUE MANDA EL CLIENTE
+    public synchronized void readClient (String message, Integer number, Socket sc){//LO QUE MANDA EL CLIENTE
 
         while (available) {
             try{
@@ -19,26 +19,27 @@ public class Chat {//EL RECURSO COMPARTIDO ES LA POSIBILIDAD DE ESCRIBIR Y LEER 
             }
         }
 
-        if(sc == null) {
+        if(message != null ) {
 
-            System.out.println("El Cliente " + number + " a enviado: " + mesaje);
+            System.out.println("▀ El Cliente " + number + " a enviado: " + message + " ▀");
             available = true;
 
         }
         else{
             if(sc.isClosed()){
 
-                System.out.println("Cliente "+ number +" a finalizado la transmisión");
+                System.out.println("╚ Cliente "+ number +" a finalizado la transmisión .......");
                 available = true;
 
             }
             else{
 
-                System.out.println("\t");
-                System.out.println("Cliente "+ number + ":");
-                System.out.println('\t' + "LocalPort " + sc.getLocalPort());
-                System.out.println('\t' + "Port " + sc.getPort());
-                System.out.println('\t' + "LocalSocketAddress " + sc.getLocalSocketAddress());
+                System.out.println("\t╔═══════════════════════════════════════════════╗");
+                System.out.println("\t║ Cliente "+ number + ":" + "                                    ║");
+                System.out.println('\t' + "║ » LocalPort " + sc.getLocalPort() + "                              ║");
+                System.out.println('\t' + "║ ▓ Port " + sc.getPort() + "                                  ║");
+                System.out.println('\t' + "║ ▲ LocalSocketAddress"+ sc.getLocalSocketAddress());
+                System.out.println("\t╚═══════════════════════════════════════════════╝");
                 available = false;
 
             }
@@ -54,16 +55,16 @@ public class Chat {//EL RECURSO COMPARTIDO ES LA POSIBILIDAD DE ESCRIBIR Y LEER 
             try{
                 wait();
             }catch (InterruptedException e) {
-                System.out.println("Se ha perdido la conexión con el Cliente "+ numero );
+                System.out.println("Se ha perdido la conexión con el Cliente "+ numero);
             }
         }
 
         //Le aviso al Servidor que escriba
-        System.out.println("Escriba un mensaje para el Cliente "+ numero  +" :");
+        System.out.println("⌂ Escriba un mensaje para el Cliente "+ numero  +" :" +" ⌂");
 
         String mesaje = sn.nextLine();
 
-        System.out.println("\nEscribiste un mensaje al Cliente "+ numero  +" :" + mesaje);
+        System.out.println("\n▲ Escribiste un mensaje al Cliente "+ numero  +" :" + mesaje + " ▲");
 
         available = false;
         notifyAll();
