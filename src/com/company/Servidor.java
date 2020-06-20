@@ -1,7 +1,10 @@
 package com.company;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.*;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -10,6 +13,7 @@ public class Servidor {
     public static void main(String[] args) {
 
         InetAddress address;
+
 
         ServerSocket servidor = null;
 
@@ -29,12 +33,13 @@ public class Servidor {
         try {
             //Comprobamos si la IP es válida, se puede reemplazar el InetAddress.getLocalHost().gerHostAddress() por la direccion.
             //Si ingresamos un direccion erronea en ese campo se dispara la excepcion Bind.
-            address = InetAddress.getByName(InetAddress.getLocalHost().getHostAddress());
+            address = InetAddress.getByName(getIPAddressIPv4("wlan"));
+
 
             //Creamos el socket del servidor
             servidor = new ServerSocket(port, 1, address);
 
-            System.out.println("Servidor iniciado en el host : " + InetAddress.getLocalHost().getHostAddress());
+            System.out.println("Servidor iniciado en el host : " + getIPAddressIPv4("wlan"));
 
         }catch (BindException be) {
             System.err.println("No puedo encontrar la dirección IP : " + be);
@@ -72,5 +77,30 @@ public class Servidor {
             Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
 
         }
+    }
+
+    public static String getIPAddressIPv4(String id) {
+        try {
+
+            java.util.List<NetworkInterface> interfaces = Collections.list(NetworkInterface.getNetworkInterfaces());
+            for (NetworkInterface intf : interfaces) {
+                if (intf.getName().contains(id)) {
+                    List<InetAddress> addrs = Collections.list(intf.getInetAddresses());
+                    for (InetAddress addr : addrs) {
+
+                        if (!addr.isLoopbackAddress()) {
+                            String sAddr = addr.getHostAddress();
+                            if (addr instanceof Inet4Address) {
+                                return sAddr;
+                            }
+                        }
+
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
 }
